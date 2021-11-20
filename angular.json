@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "d68f939e-ba68-476d-870d-250f9631fea5"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -102,6 +105,37 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "@dendritic/ngx-smart-canvas": {
+      "projectType": "library",
+      "root": "projects/dendritic/ngx-smart-canvas",
+      "sourceRoot": "projects/dendritic/ngx-smart-canvas/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/dendritic/ngx-smart-canvas/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dendritic/ngx-smart-canvas/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/dendritic/ngx-smart-canvas/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/dendritic/ngx-smart-canvas/src/test.ts",
+            "tsConfig": "projects/dendritic/ngx-smart-canvas/tsconfig.spec.json",
+            "karmaConfig": "projects/dendritic/ngx-smart-canvas/karma.conf.js"
           }
         }
       }

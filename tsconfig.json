@@ -2,6 +2,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@dendritic/ngx-smart-canvas": [
+        "dist/dendritic/ngx-smart-canvas/dendritic-ngx-smart-canvas",
+        "dist/dendritic/ngx-smart-canvas"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

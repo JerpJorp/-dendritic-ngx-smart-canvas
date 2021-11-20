@@ -1,0 +1,20 @@
+{{showReset}}
+<div #localContainer 
+    class="canvas-container" 
+    [ngClass]="{'canvas-container-scrollable': settings.zoomable === false, 'canvas-container-noscroll': settings.zoomable === true}"
+    draggable="true"
+    (dragstart)="canvasDragStart($event)"    
+    (wheel)="canvasWheel($event)"
+    (dragover)="canvasDragOver($event)"
+    (drop)="canvasDrop($event)"
+    (click)="canvasMouseClick($event)"
+    (dblclick)="canvasDoubleClick($event)"
+    (mousemove)="canvasMouseOver($event)">
+
+   
+    <!-- overlay button panel allowing user to reset zoom/center -->
+    <div *ngIf="showReset"  class="canvas-overlay">
+        <input type="button" (click)="resetCanvasZoom()" class="floating-button" value="Reset zoom"/>
+        <input type="button" (click)="resetCanvasCenter()" class="floating-button" value="Reset center"/>    
+    </div>
+</div>
