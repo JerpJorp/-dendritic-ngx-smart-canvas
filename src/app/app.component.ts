@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ViewPort, Layer, MouseToCanvas, CanvasHelper, IHelperPoint, HelperLine } from '@dendritic/ngx-smart-canvas';
-import { ILayerAndMouseInfo } from 'projects/dendritic/ngx-smart-canvas/src/public-api';
+import { ViewPort, Layer, MouseToCanvas, CanvasHelper, IHelperPoint, HelperLine, ILayerAndMouseInfo } from '@dendrityc/ngx-smart-canvas';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +7,14 @@ import { ILayerAndMouseInfo } from 'projects/dendritic/ngx-smart-canvas/src/publ
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
+
   rectangles: Rectangle[] = [];
 
   lines: Rectangle[] = [
-    {x: 100, y: 100, width: 100, height: 0, name: 'red'},
-    {x: 100, y: 100, width: 100, height: 100, name: 'green'},
-    {x: 100, y: 100, width: 50, height: 100, name: 'blue'},
-    {x: 100, y: 100, width: -100, height: -70, name: 'black'},
+    { x: 100, y: 100, width: 100, height: 0, name: 'red' },
+    { x: 100, y: 100, width: 100, height: 100, name: 'green' },
+    { x: 100, y: 100, width: 50, height: 100, name: 'blue' },
+    { x: 100, y: 100, width: -100, height: -70, name: 'black' },
   ];
 
   rectangle = new Rectangle();
@@ -29,20 +28,22 @@ export class AppComponent {
   boxLayer: Layer | undefined;
   lineLayer: Layer | undefined;
 
+  rectColor = '#FFDDEE'
+
   constructor() {
-    Array(20).fill(0).forEach( (v, rowIdx) => {
-      Array(20).fill(0).forEach( (v, colIdx) => {
+    Array(20).fill(0).forEach((v, rowIdx) => {
+      Array(20).fill(0).forEach((v, colIdx) => {
         const x = this.rectangle.x + (this.rectangle.width + 20) * rowIdx;
         const y = this.rectangle.y + (this.rectangle.height + 20) * colIdx;
         const newR = new Rectangle();
         newR.x = x;
         newR.y = y;
         newR.name = `${rowIdx},${colIdx}`;
-        this.rectangles.push(newR);              
-      });      
+        this.rectangles.push(newR);
+      });
     });
   }
-  
+
   toggle(layer: Layer | undefined) {
     if (layer) {
       layer.visible = !layer.visible;
@@ -50,21 +51,27 @@ export class AppComponent {
     }
   }
 
+  toggleColor() {
+    this.rectColor = this.rectColor === '#FFDDEE' ? '#EEDDFF' : '#FFDDEE';   
+    this.DrawBoxes(this.boxLayer as Layer);
+    this.lineLayer?.parentViewport.render();
+  }
+
   viewportReady(viewPort: ViewPort) {
+    
     this.boxLayer = viewPort.AddLayer();
     this.lineLayer = viewPort.AddLayer();
     this.DrawBoxes(this.boxLayer);
     this.DrawLines(this.lineLayer);
-    
-    this.boxLayer.parentViewport.render();
+
+    viewPort.render();
   }
 
-  redrawRequest(viewPort: Layer) {
+  redrawRequest(layer: Layer) {
 
     if (this.boxLayer) { this.DrawBoxes(this.boxLayer); }
-    if (this.lineLayer) { this.DrawLines(this.lineLayer); }    
-
-    this.boxLayer?.parentViewport.render();
+    if (this.lineLayer) { this.DrawLines(this.lineLayer); }
+    layer.parentViewport.render();
   }
 
 
@@ -92,11 +99,11 @@ export class AppComponent {
       this.nodeMessage = `clicked on ${match.name}`;
       this.lastUIRectangle = match;
     }
-}
+  }
 
   mouseOver(event: ILayerAndMouseInfo) {
     const match = this.find(event.mouseToCanvas);
-    
+
     const lineMatch = CanvasHelper.LineHit(this.lines.map(l => this.toHelperLine(l)), event.mouseToCanvas.canvasXY as IHelperPoint, 20);
     this.lineMessage = lineMatch ? 'line ' + lineMatch.id : '';
 
@@ -105,7 +112,7 @@ export class AppComponent {
       if (!same) {
         this.nodeMessage = `hovered over ${match.name}`;
         this.lastUIRectangle = match;
-      }      
+      }
     }
 
 
@@ -129,7 +136,7 @@ export class AppComponent {
       this.lineRectangle = undefined;
     }
   }
-  
+
   doubleClick(event: ILayerAndMouseInfo) {
     const match = this.find(event.mouseToCanvas);
     if (match) {
@@ -137,23 +144,23 @@ export class AppComponent {
       this.lastUIRectangle = match;
     }
   }
-  
-  DrawBoxes(layer: Layer) { 
-    const rectColor = '#FFDDEE';
-    let i = 0;
+
+  DrawBoxes(layer: Layer) {
     
+    let i = 0;
+
     layer.scene.context.strokeStyle = 'black';
 
     this.rectangles.forEach(r => {
-      layer.scene.context.fillStyle = rectColor;
+      layer.scene.context.fillStyle = this.rectColor;
       CanvasHelper.roundRect(layer.scene.context, r.x, r.y, r.width, r.height, 5);
       layer.scene.context.fill();
-      layer.scene.context.fillStyle = 'black';    
+      layer.scene.context.fillStyle = 'black';
       layer.scene.context.fillText(`${i++}`, r.x + 3, r.y + 4);
     });
   }
 
-  DrawLines(layer: Layer) { 
+  DrawLines(layer: Layer) {
     this.lines.forEach(line => {
 
       layer.scene.context.strokeStyle = line.name;
@@ -168,14 +175,14 @@ export class AppComponent {
 
     const rectColor = '#dddddd';
     let i = 0;
-    
+
     layer.scene.context.strokeStyle = 'black';
 
     this.rectangles.forEach(r => {
       layer.scene.context.fillStyle = rectColor;
       CanvasHelper.roundRect(layer.scene.context, r.x, r.y, r.width, r.height, 5);
       layer.scene.context.fill();
-      layer.scene.context.fillStyle = 'black';    
+      layer.scene.context.fillStyle = 'black';
       layer.scene.context.fillText(`${i++}`, r.x + 3, r.y + 4);
     });
 

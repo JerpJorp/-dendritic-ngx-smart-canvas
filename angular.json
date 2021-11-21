@@ -109,23 +109,23 @@
         }
       }
     },
-    "@dendritic/ngx-smart-canvas": {
+    "@dendrityc/ngx-smart-canvas": {
       "projectType": "library",
-      "root": "projects/dendritic/ngx-smart-canvas",
-      "sourceRoot": "projects/dendritic/ngx-smart-canvas/src",
+      "root": "projects/dendrityc/ngx-smart-canvas",
+      "sourceRoot": "projects/dendrityc/ngx-smart-canvas/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/dendritic/ngx-smart-canvas/ng-package.json"
+            "project": "projects/dendrityc/ngx-smart-canvas/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/dendritic/ngx-smart-canvas/tsconfig.lib.prod.json"
+              "tsConfig": "projects/dendrityc/ngx-smart-canvas/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/dendritic/ngx-smart-canvas/tsconfig.lib.json"
+              "tsConfig": "projects/dendrityc/ngx-smart-canvas/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -133,9 +133,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/dendritic/ngx-smart-canvas/src/test.ts",
-            "tsConfig": "projects/dendritic/ngx-smart-canvas/tsconfig.spec.json",
-            "karmaConfig": "projects/dendritic/ngx-smart-canvas/karma.conf.js"
+            "main": "projects/dendrityc/ngx-smart-canvas/src/test.ts",
+            "tsConfig": "projects/dendrityc/ngx-smart-canvas/tsconfig.spec.json",
+            "karmaConfig": "projects/dendrityc/ngx-smart-canvas/karma.conf.js"
           }
         }
       }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgxSmartCanvasModule } from '@dendritic/ngx-smart-canvas';
+import { NgxSmartCanvasModule } from '@dendrityc/ngx-smart-canvas';
 
 import { AppComponent } from './app.component';
 

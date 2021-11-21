@@ -1,5 +1,5 @@
 {
-  "name": "@dendritic/ngx-smart-canvas",
+  "name": "@dendrityc/ngx-smart-canvas",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^12.2.0",

@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, '../../../coverage/dendritic/ngx-smart-canvas'),
+      dir: require('path').join(__dirname, '../../../coverage/dendrityc/ngx-smart-canvas'),
       subdir: '.',
       reporters: [
         { type: 'html' },

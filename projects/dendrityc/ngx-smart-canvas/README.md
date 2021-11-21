@@ -1,11 +1,5 @@
 # @dendrityc/ngx-smart-canvas
 
-## Development server
-
-Run `ng build @dendrityc/ngx-smart-canvas --watch` to build/watch ngx-smart-canvas library
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## About
 
 I couldn't find any good  canvas related packages for Angular that make it easy to have multiple layers and handle zooming and panning.  
 * zoom/pan handling requires responding to user mouse wheel/drag events, transforming the canvas, and dealiing with the change in coordinate locations

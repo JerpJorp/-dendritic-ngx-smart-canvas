@@ -3,9 +3,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@dendritic/ngx-smart-canvas": [
-        "dist/dendritic/ngx-smart-canvas/dendritic-ngx-smart-canvas",
-        "dist/dendritic/ngx-smart-canvas"
+      "@dendrityc/ngx-smart-canvas": [
+        "dist/dendrityc/ngx-smart-canvas/dendrityc-ngx-smart-canvas",
+        "dist/dendrityc/ngx-smart-canvas"
       ]
     },
     "baseUrl": "./",
