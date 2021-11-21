@@ -1,3 +1,5 @@
+import { CanvasHelper } from "../canvas-helper";
+
 export class Scene {
 
     width = 0;
@@ -22,10 +24,10 @@ export class Scene {
     }
 
     clear() {
-        var context = this.context;
-        context.clearRect(0, 0, this.width, this.height);
+        CanvasHelper.clear(this.context);       
     }
 
+    
     toImage(callback: (n: HTMLImageElement) => any) {
         var that = this,
             imageObj = new Image(),

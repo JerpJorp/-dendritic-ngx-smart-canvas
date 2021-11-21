@@ -132,7 +132,6 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
 
       this.viewport?.layers.forEach(layer => {
         const dragStart = this.dragStart as {x: number, y: number};
-        this.clear(layer.scene.context);
         const txfrm = layer.scene.context.getTransform();
         layer.scene.context.translate((this.dragEnd.x - dragStart.x) / txfrm.a, (this.dragEnd.y - dragStart.y) / txfrm.d);
         this.xRedrawRequest(layer);
@@ -145,7 +144,6 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
     if (this.dragStart) {
       event.preventDefault(); // allow dropping into here as it is the source of drag
     }
-    
   }
 
   resetCanvasZoom() {
@@ -154,8 +152,6 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
       layer.scene.context.setTransform(1,0,0,1,txfrm.e,txfrm.f);
       this.xRedrawRequest(layer);
     });
-
-    
   }
 
   resetCanvasCenter() {
@@ -175,20 +171,12 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
   }
 
   private xRedrawRequest(layer: Layer) {
-    CanvasHelper.clear(layer.scene.context);
+    layer.scene.clear();
     this.redrawRequest.emit(layer);
     
     this.checkShowReset();
   }
 
-  clear(ctx: CanvasRenderingContext2D) {
-    ctx.save();
-    ctx.setTransform(1,0,0,1,0,0);
-    // Will always clear the right space
-    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
-    ctx.restore();
-    
-  }
 
   checkShowReset() {
     this.viewport?.layers.forEach(layer => {

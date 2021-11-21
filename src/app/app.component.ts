@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ViewPort, Layer, MouseToCanvas, CanvasHelper, IHelperPoint, HelperLine, ILayerAndMouseInfo } from '@dendrityc/ngx-smart-canvas';
 
 @Component({

@@ -113,3 +113,11 @@ toHelperLine(rect: Rectangle): HelperLine {
 In this library, panning and zooming apply to each layer's canvas instead of the parent canvas, which is the reason for the requestRedraw output event.  It is 
 possible to do panning/zooming on the real canvas element, but zooming and redrawing a layer causes the results to be pixelated, especially text, since 
 the child canvas images aren't vectors
+
+
+### publishing
+```
+ng build @dendrityc/ngx-smart-canvas
+cd dist/dendrityc/ngx-smart-canvas/
+npm publish
+```

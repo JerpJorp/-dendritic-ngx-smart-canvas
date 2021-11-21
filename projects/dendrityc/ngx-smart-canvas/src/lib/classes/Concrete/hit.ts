@@ -1,3 +1,5 @@
+import { CanvasHelper } from "../canvas-helper";
+
 export class Hit {
     height = 0;
     width = 0;
@@ -24,8 +26,7 @@ export class Hit {
     }
 
     clear() {
-        var context = this.context;
-        context.clearRect(0, 0, this.width, this.height);
+        CanvasHelper.clear(this.context);       
     }
 
     getIntersection(x: number, y: number) {
