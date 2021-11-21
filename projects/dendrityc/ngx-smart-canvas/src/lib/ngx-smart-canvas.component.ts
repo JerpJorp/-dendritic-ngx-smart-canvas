@@ -40,7 +40,8 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
     if (this.container) {
       this.concreteObject = new Concrete(this.container.nativeElement);
       this.viewport = this.concreteObject.AddViewPort(this.settings.canvasWidth, this.settings.canvasHeight);
-      this.viewportReady.emit(this.viewport)
+      this.viewportReady.emit(this.viewport);
+      this.viewport.render();
     }
   }
 
@@ -173,6 +174,7 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
   private xRedrawRequest(layer: Layer) {
     layer.scene.clear();
     this.redrawRequest.emit(layer);
+    this.viewport?.render();
     
     this.checkShowReset();
   }

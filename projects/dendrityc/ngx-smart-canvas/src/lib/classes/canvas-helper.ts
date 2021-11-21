@@ -55,18 +55,9 @@ export class CanvasHelper {
     // returns closest line within line's rectangle.  If no lines are within rectange, returns undefined
     static LineHit(lines: HelperLine[], point: IHelperPoint, minDistance: number ): HelperLine | undefined {
 
-        const closeEnough = lines.filter(line => {
-            if (Math.abs(point.x - line.midpoint.x) < line.length) {
-                if (Math.abs(point.y - line.midpoint.y) < line.length) {
-                    return true;
-                }
-            }
-            return false;
-        });
-
         let closestLine: HelperLine | undefined;
         let closestDistance = Number.MAX_SAFE_INTEGER;
-        closeEnough.forEach((line, idx) => {
+        lines.forEach((line, idx) => {
             const distance = CanvasHelper.LineDistanceFromCoordinate(line, point);
             if (distance < closestDistance && distance < minDistance) {
                 closestDistance = distance;
@@ -106,10 +97,6 @@ export class HelperLine {
     
     length: number;
     midpoint: IHelperPoint;
-    minX: number;
-    minY: number;
-    dx: number;
-    dy: number;
 
     constructor (public p0: IHelperPoint, public p1: IHelperPoint, public id?: any) {
         this.length = 
@@ -118,14 +105,9 @@ export class HelperLine {
                 Math.pow(p1.y - p0.y, 2)
             );
 
-        this.minX = Math.min(p0.x, p1.x);
-        this.minY = Math.min(p0.y, p1.y);
-        this.dx = Math.abs(p0.x - p1.x);
-        this.dy = Math.abs(p0.y - p1.y);
-
         this.midpoint = {
-            x: this.minX + (this.dx / 2),
-            y: this.minY + (this.dy / 2)
+            x: (p0.x + p1.x) / 2,
+            y: (p0.y + p1.y) / 2,
         }
     }
 }
