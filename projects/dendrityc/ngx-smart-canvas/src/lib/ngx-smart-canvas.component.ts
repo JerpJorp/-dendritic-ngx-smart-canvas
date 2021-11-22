@@ -5,7 +5,6 @@ import { Concrete } from './classes/Concrete/concrete';
 import { ViewPort } from './classes/Concrete/view-port';
 import { Layer } from './classes/Concrete/layer';
 
-import { SmartCanvasSettings } from './classes/smart-canvas-settings';
 import { MouseToCanvas } from '../public-api';
 
 @Component({
@@ -18,7 +17,14 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
   @ViewChild('localContainer', { static: true })
   container: ElementRef<HTMLDivElement> | undefined;
 
-  @Input() settings = new SmartCanvasSettings();
+  @Input() zoomable = true;    //  true -> wheel zooms in and out. false -> wheel is handled normally (scroll)
+  @Input() minimumZoom = 0.4;
+  @Input() maximumZoom = 5;
+  @Input() zoomDelta = 0.05;
+  @Input() ctrlZoomMultiplier = 2;
+  @Input() altZoomMultiplier = 2;
+  @Input() canvasWidth = 2500;
+  @Input() canvasHeight = 3500;
 
   @Output() viewportReady = new EventEmitter<ViewPort>();
   @Output() redrawRequest = new EventEmitter<Layer>();
@@ -39,7 +45,7 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     if (this.container) {
       this.concreteObject = new Concrete(this.container.nativeElement);
-      this.viewport = this.concreteObject.AddViewPort(this.settings.canvasWidth, this.settings.canvasHeight);
+      this.viewport = this.concreteObject.AddViewPort(this.canvasWidth, this.canvasHeight);
       this.viewportReady.emit(this.viewport);
       this.viewport.render();
     }
@@ -47,35 +53,39 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
 
   canvasWheel(event: WheelEvent) {
 
-    if (this.viewport?.scene.context && this.settings.zoomable) {
+    if (this.viewport?.scene.context && this.zoomable) {
 
-      let keepGoing = true;
-
-      const translatedXY = CanvasHelper.MouseToCanvas(this.viewport.scene.canvas, this.viewport.scene.context, event);
+      let keepGoing = true;      
 
       this.viewport.layers.forEach(layer => {
+
+        const translatedXY = CanvasHelper.MouseToCanvas(this.viewport?.scene.canvas as HTMLCanvasElement, layer.scene.context, event);
 
         const context = layer.scene.context;
 
         const currentTxfrm = context.getTransform();
+
+        // (a, d) = scale x,y
+        // (e, f) = translation x,y
+
         const currentScale = currentTxfrm.a;
-        const currentXOffset = currentTxfrm.e;
-        const currentYOffset = currentTxfrm.f;
+        const ctrlModifier = event.ctrlKey ? this.ctrlZoomMultiplier : 1;
+        const shiftModifer = event.altKey ? this.altZoomMultiplier : 1;
 
-        const ctrlModifier = event.ctrlKey ? this.settings.ctrlZoomMultiplier : 1;
-        const shiftModifer = event.ctrlKey ? this.settings.altZoomMultiplier : 1;
-
-        let scaleDelta = event.deltaY > 0 ? 0.1 : -0.1;
+        let scaleDelta = this.zoomDelta;
+        if (event.deltaY < 0)  {
+          scaleDelta *= -1;
+        }
         
         scaleDelta *= ctrlModifier;
         scaleDelta *= shiftModifer;
 
-        if (currentScale < this.settings.minimumZoom && scaleDelta < 0) {
+        if (currentScale < this.minimumZoom && scaleDelta < 0) {
           //minimum zoom
           keepGoing = false;
         }
 
-        if (currentScale > this.settings.maximumZoom && scaleDelta > 0) {
+        if (currentScale > this.maximumZoom && scaleDelta > 0) {
           //maximum zoom
           keepGoing = false;
         }
@@ -84,20 +94,16 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
           //adjust delta for current zoom amount (txfrmA)
           const scaleDeltaNormalized = scaleDelta / currentScale;
           const scaleFactor = scaleDeltaNormalized + 1;
-
-          
-          
-          const coords = translatedXY.canvasXY;
           const mouseCoords = translatedXY.canvasMouseXy;
-
           context.translate(mouseCoords.x, mouseCoords.y);
           context.scale(scaleFactor, scaleFactor);
-          context.translate(mouseCoords.x * -1, mouseCoords.y * -1);
+          context.translate(mouseCoords.x * -1, mouseCoords.y * -1);  
+
           this.xRedrawRequest(layer);
         }                
       });
 
-      return !keepGoing;
+      return false;
     }
     return true;
   }

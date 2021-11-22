@@ -4,7 +4,6 @@
 
 export * from './lib/ngx-smart-canvas.component';
 export * from './lib/ngx-smart-canvas.module';
-export * from './lib/classes/smart-canvas-settings';
 
 export * from './lib/classes/Concrete/concrete';
 export * from './lib/classes/Concrete/view-port';

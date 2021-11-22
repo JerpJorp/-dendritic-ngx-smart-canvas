@@ -11,10 +11,10 @@ export class AppComponent {
   rectangles: Rectangle[] = [];
 
   lines: Rectangle[] = [
-    { x: 100, y: 100, width: 100, height: 0, name: 'red' },
-    { x: 100, y: 100, width: 100, height: 100, name: 'green' },
-    { x: 100, y: 100, width: 50, height: 100, name: 'blue' },
-    { x: 100, y: 100, width: -100, height: -70, name: 'black' },
+    { x: 300, y: 300, width: 100, height: 0, name: 'red' },
+    { x: 300, y: 300, width: 100, height: 100, name: 'green' },
+    { x: 300, y: 300, width: 50, height: 100, name: 'blue' },
+    { x: 300, y: 300, width: -100, height: -70, name: 'black' },
   ];
 
   rectangle = new Rectangle();
@@ -28,7 +28,7 @@ export class AppComponent {
   boxLayer: Layer | undefined;
   lineLayer: Layer | undefined;
 
-  rectColor = '#FFDDEE'
+  rectColor = '#88AACC'
 
   constructor() {
     Array(20).fill(0).forEach((v, rowIdx) => {
@@ -52,7 +52,7 @@ export class AppComponent {
   }
 
   toggleColor() {
-    this.rectColor = this.rectColor === '#FFDDEE' ? '#EEDDFF' : '#FFDDEE';   
+    this.rectColor = this.rectColor === '#88AACC' ? '#88CCAA' : '#88AACC';   
     this.DrawBoxes(this.boxLayer as Layer);
     this.lineLayer?.parentViewport.render();
   }

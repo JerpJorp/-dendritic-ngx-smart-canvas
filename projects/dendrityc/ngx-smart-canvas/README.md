@@ -63,6 +63,33 @@ find(x: MouseToCanvas): Rectangle | undefined {
     return undefined;
 }
 ```
+
+## other input settings 
+```html
+<lib-ngx-smart-canvas 
+  [canvasWidth]= "2000" 
+  [canvasHeight]= "1000"
+  [zoomable] = "true"
+  [minimumZoom] = "0.5"
+  [maximumZoom]= "2"
+  [zoomDelta]="0.1"
+  [ctrlZoomMultiplier]= "1.5"
+  [altZoomMultiplier]= "2">
+</lib-ngx-smart-canvas>
+```
+defaults:
+```javascript
+  @Input() canvasWidth = 2500;
+  @Input() canvasHeight = 3500;
+  @Input() zoomable = true;    //  true -> wheel zooms in and out. false -> wheel is handled normally (scroll)
+  @Input() minimumZoom = 0.4;
+  @Input() maximumZoom = 5;
+  @Input() zoomDelta = 0.05;
+  @Input() ctrlZoomMultiplier = 2;
+  @Input() altZoomMultiplier = 2;
+
+```
+
 ## Doing your own canvas updates
 If your host component needs to redraw or turn layers on off, here are some examples.
 

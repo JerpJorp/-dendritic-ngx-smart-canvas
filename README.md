@@ -1,11 +1,5 @@
 # @dendrityc/ngx-smart-canvas
 
-## Development server
-
-Run `ng build @dendrityc/ngx-smart-canvas --watch` to build/watch ngx-smart-canvas library
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## About
 
 I couldn't find any good  canvas related packages for Angular that make it easy to have multiple layers and handle zooming and panning.  
 * zoom/pan handling requires responding to user mouse wheel/drag events, transforming the canvas, and dealiing with the change in coordinate locations
@@ -69,6 +63,32 @@ find(x: MouseToCanvas): Rectangle | undefined {
     return undefined;
 }
 ```
+
+## other input settings 
+```html
+<lib-ngx-smart-canvas 
+  [canvasWidth]= "2000" 
+  [canvasHeight]= "1000"
+  [zoomable] = "true"
+  [minimumZoom] = "0.5"
+  [maximumZoom]= "2"
+  [zoomDelta]="0.1"
+  [ctrlZoomMultiplier]= "1.5"
+  [altZoomMultiplier]= "2">
+</lib-ngx-smart-canvas>
+```
+defaults:
+```javascript
+  @Input() canvasWidth = 2500;
+  @Input() canvasHeight = 3500;
+  @Input() zoomable = true;    //  true -> wheel zooms in and out. false -> wheel is handled normally (scroll)
+  @Input() minimumZoom = 0.4;
+  @Input() maximumZoom = 5;
+  @Input() zoomDelta = 0.05;
+  @Input() ctrlZoomMultiplier = 2;
+  @Input() altZoomMultiplier = 2;
+
+```
 ## Doing your own canvas updates
 If your host component needs to redraw or turn layers on off, here are some examples.
 
@@ -119,3 +139,9 @@ toHelperLine(rect: Rectangle): HelperLine {
 In this library, panning and zooming apply to each layer's canvas instead of the parent canvas, which is the reason for the requestRedraw output event.  It is 
 possible to do panning/zooming on the real canvas element, but zooming and redrawing a layer causes the results to be pixelated, especially text, since 
 the child canvas images aren't vectors
+
+## Development server
+Run `ng build @dendrityc/ngx-smart-canvas --watch` to build the library and watch for code changes. 
+Run `ng serve` for a dev server in a separate command window. Navigate to http://localhost:4200/. 
+The app will automatically reload if you change any of the source files.
+

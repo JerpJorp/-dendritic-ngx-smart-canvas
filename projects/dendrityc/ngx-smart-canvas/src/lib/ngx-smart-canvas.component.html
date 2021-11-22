@@ -1,6 +1,6 @@
 <div #localContainer 
     class="canvas-container" 
-    [ngClass]="{'canvas-container-scrollable': settings.zoomable === false, 'canvas-container-noscroll': settings.zoomable === true}"
+    [ngClass]="{'canvas-container-scrollable': zoomable === false, 'canvas-container-noscroll': zoomable === true}"
     draggable="true"
     (dragstart)="canvasDragStart($event)"    
     (wheel)="canvasWheel($event)"
