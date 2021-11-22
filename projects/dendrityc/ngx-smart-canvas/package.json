@@ -1,11 +1,16 @@
 {
   "name": "@dendrityc/ngx-smart-canvas",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "peerDependencies": {
     "@angular/common": "^12.2.0",
     "@angular/core": "^12.2.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "directory": "https://github.com/JerpJorp/-dendritic-ngx-smart-canvas"
+  },
+  "homepage": "https://github.com/JerpJorp/-dendritic-ngx-canvas-graph/blob/main/README.md"
 }

@@ -121,4 +121,5 @@ ng build @dendrityc/ngx-smart-canvas
 cd dist/dendrityc/ngx-smart-canvas/
 npm publish
 cd ../../..
+
 ```
