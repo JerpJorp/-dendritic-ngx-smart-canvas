@@ -50,6 +50,9 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
     if (this.viewport?.scene.context && this.settings.zoomable) {
 
       let keepGoing = true;
+
+      const translatedXY = CanvasHelper.MouseToCanvas(this.viewport.scene.canvas, this.viewport.scene.context, event);
+
       this.viewport.layers.forEach(layer => {
 
         const context = layer.scene.context;
@@ -82,7 +85,7 @@ export class NgxSmartCanvasComponent implements AfterViewInit {
           const scaleDeltaNormalized = scaleDelta / currentScale;
           const scaleFactor = scaleDeltaNormalized + 1;
 
-          const translatedXY = CanvasHelper.MouseToCanvas(context.canvas, context, event);
+          
           
           const coords = translatedXY.canvasXY;
           const mouseCoords = translatedXY.canvasMouseXy;
